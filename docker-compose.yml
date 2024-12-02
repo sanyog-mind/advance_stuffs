@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - fastapi_network
+
+  fastapi_async:
+    container_name: fastapi_async
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker_file
+    environment:
+      - DEBUG=$DEBUG
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - fastapi_network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  fastapi_network:
+    driver: bridge
