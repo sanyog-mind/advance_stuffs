@@ -79,4 +79,3 @@ async def setup_totp(user: User, db_session):
 
     return StreamingResponse(img_buffer, media_type="image/png")
 
-#
