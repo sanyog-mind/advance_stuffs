@@ -59,9 +59,8 @@ async def login_with_otp(
     # Await the async function and get the result
     result = await create_and_send_otp(mobile_number, session)
 
-    # Ensure result is serializable
     if isinstance(result, dict):
-        return result  # Already serializable
+        return result
     else:
         return {"message": "Internal server error", "status": "error"}
 

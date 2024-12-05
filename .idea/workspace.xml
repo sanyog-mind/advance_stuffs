@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="056ffa31-4954-407f-9b0e-060d6502511a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/user/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/stream_data/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/stream_data/service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/route.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/route.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utills/send_email.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utills/send_email.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,12 +25,17 @@
     &quot;assignee&quot;: &quot;ishika-mi&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/sanyog-mind/advance_stuffs.git",
-    "accountId": "06d5a2c6-9738-4b65-94fc-ba23e13f5aa3"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/sanyog-mind/advance_stuffs.git&quot;,
+    &quot;accountId&quot;: &quot;06d5a2c6-9738-4b65-94fc-ba23e13f5aa3&quot;
   }
-}]]></component>
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/app/stream_data/service.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/venv/lib/python3.10/site-packages/sqlalchemy/orm/session.py" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/venv/lib/python3.10/site-packages/starlette/middleware/cors.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -41,12 +49,13 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/mind/sanyog/fast-k8-main/src/app/stream_data",
+    "last_opened_file_path": "/home/mind/sanyog/socket_io_learning",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -75,6 +84,12 @@
       <workItem from="1732768581675" duration="3255000" />
       <workItem from="1732771850340" duration="26091000" />
       <workItem from="1732854917747" duration="23191000" />
+      <workItem from="1733199767201" duration="3953000" />
+      <workItem from="1733213783702" duration="2445000" />
+      <workItem from="1733224458933" duration="599000" />
+      <workItem from="1733227544599" duration="5607000" />
+      <workItem from="1733286815132" duration="2567000" />
+      <workItem from="1733373274410" duration="16118000" />
     </task>
     <servers />
   </component>
@@ -85,8 +100,35 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="83048977-5246-4b56-a9a4-0d8a622cfc49" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
+        <entry key="83048977-5246-4b56-a9a4-0d8a622cfc49">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State>

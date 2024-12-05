@@ -7,7 +7,6 @@ import logging
 import asyncio
 from kafka import KafkaProducer, KafkaConsumer
 from textblob import TextBlob
-import pandas as pd
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)

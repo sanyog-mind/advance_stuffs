@@ -28,7 +28,7 @@ services:
       - db
     networks:
       - fastapi_network
-
+  
 volumes:
   postgres_data:
     driver: local
