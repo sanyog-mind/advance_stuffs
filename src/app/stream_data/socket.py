@@ -1,10 +1,15 @@
+import os
+
 import redis.asyncio as redis
 import asyncio
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, APIRouter
 from fastapi.responses import HTMLResponse
 
-# Create async Redis connection
-r = redis.Redis(host='localhost', port=6379, db=0)
+redis_port = int(os.getenv("REDIS_PORT"))
+redis_host = os.getenv("REDIS_HOST")
+redis_db = os.getenv("REDIS_DB")
+
+r = redis.Redis(host=redis_host, port=redis_port, db=redis_db)
 
 socket_router = APIRouter()
 
@@ -63,6 +68,5 @@ async def get():
     return HTMLResponse(content=html_content)
 @socket_router.post("/send_notification")
 async def send_notification(user_id: str, message: str):
-    # Publish notification to Redis channel
     await r.publish(f"notifications:{user_id}", message)
     return {"message": f"Notification sent to {user_id}"}

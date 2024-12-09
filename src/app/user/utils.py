@@ -58,7 +58,6 @@ async def generate_tokens(user):
 
 
 
-
 async def setup_totp(user: User, db_session):
     if not user.totp_secret:
         user.totp_secret = pyotp.random_base32()

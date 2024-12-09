@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 sys.path.append(str(BASE_DIR))
 
 # Now you can import your modules correctly
-from src.models import Base
+from src.app.imp_practices.models import Base
 from src.config.db_config import loaded_config
 
 # this is the Alembic Config object, which provides

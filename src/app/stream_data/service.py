@@ -1,3 +1,6 @@
+import os
+
+from dotenv import load_dotenv
 from fastapi import FastAPI
 import requests
 import json
@@ -12,9 +15,11 @@ from textblob import TextBlob
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-KAFKA_TOPIC = 'trading_signals'
-KAFKA_BROKER = '127.0.0.1:9092'
-NEWS_API_KEY = '9ebfc0cfe4b240c69f562e3d6d0d8843'
+load_dotenv()
+
+KAFKA_TOPIC = os.getenv("KAFKA_TOPIC")
+KAFKA_BROKER = os.getenv("KAFKA_BROKER")
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 CATEGORIES = ['Tech', 'Construction', 'Petroleum', 'Finance', 'Health']
 
 app = FastAPI()
@@ -22,7 +27,7 @@ app = FastAPI()
 
 async def fetch_news():
     """Fetch news data from the NewsAPI asynchronously."""
-    url = f'https://newsapi.org/v2/everything?q=stock market&apiKey={NEWS_API_KEY}'
+    url = f'{os.getenv("NEWS_API_URL")}?q=stock market&apiKey={NEWS_API_KEY}'
     response = await asyncio.to_thread(requests.get, url)
     return response.json().get('articles', [])
 
