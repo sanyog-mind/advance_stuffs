@@ -4,7 +4,8 @@ from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
 from src.app.imp_practices.service import get_employees_and_projects, get_employees_without_task, get_aggregate_hours, \
-    get_aggregate_hours_project_wise, get_top_contributor, get_department_task_completion_status, get_top_performers
+    get_aggregate_hours_project_wise, get_top_contributor, get_department_task_completion_status, get_top_performers, \
+    get_project_wise_summary
 from src.connection.connection import ConnectionHandler, get_connection_handler_for_app
 
 main_router = APIRouter()
@@ -112,6 +113,35 @@ async def get_top_performers_route(
 
     try:
         data = await get_top_performers(session)
+
+        if isinstance(data, dict) and "message" in data:
+            raise HTTPException(status_code=404, detail=data["message"])
+
+        return JSONResponse(content=data)
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@main_router.get("/projects/{project_id}/timesheet-summary")
+async def get_project_timesheet_summary_route(
+        project_id: int,
+        connection_handler: ConnectionHandler = Depends(get_connection_handler_for_app)
+):
+    """
+    Endpoint to retrieve timesheet summary for a specific project.
+
+    Args:
+        project_id (int): ID of the project
+        connection_handler (ConnectionHandler): Database connection handler
+
+    Returns:
+        JSONResponse with project timesheet summary or error message
+    """
+    session = connection_handler.session
+
+    try:
+        data = await get_project_wise_summary(project_id, session)
 
         if isinstance(data, dict) and "message" in data:
             raise HTTPException(status_code=404, detail=data["message"])
