@@ -5,9 +5,9 @@ from starlette.responses import JSONResponse
 
 from src.app.imp_practices.service import get_employees_and_projects, get_employees_without_task, get_aggregate_hours, \
     get_aggregate_hours_project_wise, get_top_contributor, get_department_task_completion_status, get_top_performers, \
-    get_project_wise_summary
+    get_project_wise_summary, get_order_summary_user_wise
 from src.connection.connection import ConnectionHandler, get_connection_handler_for_app
-
+from src.app.imp_practices import schema as imp_practices_schema
 main_router = APIRouter()
 
 @main_router.get("/departments/{department_id}/employees")
@@ -147,6 +147,27 @@ async def get_project_timesheet_summary_route(
             raise HTTPException(status_code=404, detail=data["message"])
 
         return JSONResponse(content=data)
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@main_router.get("/order/{user_id}/order-summary")
+async def get_order_summary_user_wise_route(
+        user_id: int,
+        connection_handler: ConnectionHandler = Depends(get_connection_handler_for_app)
+):
+
+    session = connection_handler.session
+
+    try:
+        data = await get_order_summary_user_wise(user_id, session)
+
+        print("data",data)
+
+        if isinstance(data, dict) and "message" in data:
+            raise HTTPException(status_code=404, detail=data["message"])
+
+        return JSONResponse(data)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

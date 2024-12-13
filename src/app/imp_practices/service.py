@@ -3,7 +3,7 @@ from sqlalchemy import or_, func, desc, case, distinct
 from sqlalchemy.future import select
 from sqlalchemy.orm import joinedload, selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.app.imp_practices.models import Department, Employee, Project, Task, Timesheet
+from src.app.imp_practices.models import Department, Employee, Project, Task, Timesheet, Product, User, Order, OrderItem
 
 
 async def get_employees_and_projects(department_id: int, db: AsyncSession):
@@ -234,14 +234,12 @@ async def get_project_wise_summary(project_id: int, db: AsyncSession):
         .filter(Task.project_id == project_id)
         .scalar_subquery()
     )
-    #
     total_employee_in_project= (
         select(
             func.count(distinct(Employee.id)).label('total_employees'))
             .select_from(Employee).
             join(Task).
             filter(Task.project_id==project_id)
-
     )
 
     query = (
@@ -256,7 +254,6 @@ async def get_project_wise_summary(project_id: int, db: AsyncSession):
             func.count(distinct(Task.id)).label('total_tasks'),
             func.sum(Timesheet.hours_worked).label('total_hours'),
             func.count(case((Task.status == 'Completed', 1))).label('completed_tasks'),
-
         )
         .select_from(Project)
         .join(Task, Task.project_id == Project.id)
@@ -284,11 +281,9 @@ async def get_project_wise_summary(project_id: int, db: AsyncSession):
     if not project:
         return {"message": f"Project with ID {project_id} not found"}
 
-    # If no timesheets found
     if not project_summaries:
         return {"message": "No timesheet entries found for this project"}
 
-    # Format the results
     formatted_summaries = []
     for summary in project_summaries:
         formatted_summaries.append({
@@ -304,3 +299,45 @@ async def get_project_wise_summary(project_id: int, db: AsyncSession):
         })
 
     return jsonable_encoder(formatted_summaries)
+
+# Retrieve a summary of a user's orders
+# including order details, total spent, and applied promotions.
+
+async def get_order_summary_user_wise(user_id: int, db: AsyncSession):
+    query=(
+        select(
+            User.username.label('username'),
+            Product.name.label('product_name'),
+            Order.order_date.label('order_date'),
+            func.sum(OrderItem.quantity * OrderItem.unit_price).label('total_spent'),
+            func.array_agg(Product.name).label('products')
+        )
+        .join(Order,User.id == Order.user_id)
+        .join(OrderItem,Order.id == OrderItem.id)
+        .join(Product,OrderItem.product_id == Product.id)
+        .filter(User.id == user_id)
+        .group_by(User.username,Product.name, Order.id, Order.order_date)
+    )
+
+    result = await db.execute(query)
+    query_result = result.all()
+
+    ordered_products = []
+    for i in query_result:
+        products = i.products
+        ordered_products.append(products[0])
+    if not query_result:
+        return {"message": "No orders found for this user"}
+
+    formatted_orders = []
+    for row in query_result:
+        formatted_orders.append({
+            "username": row.username,
+            "product_name": ordered_products,
+            "order_date": row.order_date,
+            "total_spent": row.total_spent,
+            "products": row.products,
+        })
+    abc = jsonable_encoder(formatted_orders)
+
+    return abc
