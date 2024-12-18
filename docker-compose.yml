@@ -22,13 +22,37 @@ services:
       dockerfile: ./docker_file
     environment:
       - DEBUG=$DEBUG
-    ports:
-      - "8000:8000"
     depends_on:
       - db
+      - kafka
+    ports:
+      - "8000:8000"
     networks:
       - fastapi_network
-  
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - fastapi_network
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    ports:
+      - "9093:9092"
+    networks:
+      - fastapi_network
+
 volumes:
   postgres_data:
     driver: local
