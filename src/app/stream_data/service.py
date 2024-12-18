@@ -47,7 +47,7 @@ def generate_signal(polarity):
     else:
         return 'HOLD'
 
-
+#
 # async def stream_to_kafka(news_data):
 #     """Stream the news data to Kafka asynchronously."""
 #     producer = KafkaProducer(bootstrap_servers=KAFKA_BROKER,

@@ -5,6 +5,8 @@ import urllib
 from datetime import datetime
 from datetime import timedelta
 from http.client import responses
+import pandas as pd
+from fastapi import HTTPException
 
 import httpx
 import pyotp
@@ -172,3 +174,15 @@ async def verify_totp_service(mobile_number: str, totp_code: str, db_session):
     return {
         "message": "TOTP verified successfully", **tokens
     }
+
+
+def read_and_compute_sum(csv_path: str, no1: float, no2: float) -> float:
+    df = pd.read_csv(csv_path)
+
+    new_row = pd.DataFrame({"no1": [no1], "no2": [no2]})
+
+    df = pd.concat([df, new_row], ignore_index=True)
+
+    df.to_csv(csv_path, index=False)
+
+    return df['sum'].iloc[-1]

@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="056ffa31-4954-407f-9b0e-060d6502511a" name="Changes" comment="final">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/stream_data/route.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/stream_data/route.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/stream_data/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/stream_data/service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/route.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/route.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/schema.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/schema.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/user/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/user/service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,6 +111,8 @@
       <workItem from="1734352643429" duration="4368000" />
       <workItem from="1734410149850" duration="564000" />
       <workItem from="1734410820452" duration="39000" />
+      <workItem from="1734499415827" duration="59000" />
+      <workItem from="1734505237207" duration="19676000" />
     </task>
     <task id="LOCAL-00001" summary="final">
       <option name="closed" value="true" />

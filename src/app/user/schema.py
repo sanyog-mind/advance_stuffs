@@ -11,3 +11,7 @@ class loginwithemailandpassword(BaseModel):
 class TOTPVerificationRequest(BaseModel):
     mobile_number: str
     totp: str
+
+class NumbersInput(BaseModel):
+    no1: float
+    no2: float
