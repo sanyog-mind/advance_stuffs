@@ -8,7 +8,7 @@ import csv
 import time
 import logging
 import asyncio
-from kafka import KafkaProducer, KafkaConsumer
+# from kafka import KafkaProducer, KafkaConsumer
 from textblob import TextBlob
 
 # Setup logging
@@ -48,52 +48,52 @@ def generate_signal(polarity):
         return 'HOLD'
 
 
-async def stream_to_kafka(news_data):
-    """Stream the news data to Kafka asynchronously."""
-    producer = KafkaProducer(bootstrap_servers=KAFKA_BROKER,
-                             value_serializer=lambda v: json.dumps(v).encode('utf-8'))
-
-    for article in news_data:
-        title = article['title']
-        url = article['url']
-        sentiment = await analyze_sentiment(title)
-        signal = generate_signal(sentiment)
-
-        message = {'title': title, 'url': url, 'sentiment': sentiment, 'signal': signal}
-        producer.send(KAFKA_TOPIC, value=message)
-
-    producer.close()
-    logger.info("News data streamed to Kafka.")
-
-
-async def consume_from_kafka():
-    """Consume news data from Kafka asynchronously."""
-    consumer = KafkaConsumer(
-        KAFKA_TOPIC,
-        bootstrap_servers=KAFKA_BROKER,
-        auto_offset_reset='earliest',
-        enable_auto_commit=True,
-        session_timeout_ms=160000,
-        request_timeout_ms=170000
-    )
-    news_records = []
-    logger.info(f"Consumer started, waiting for messages on topic: {KAFKA_TOPIC}...")
-
-    def consume_messages():
-        for message in consumer:
-            record = json.loads(message.value.decode('utf-8'))
-            news_records.append(record)
-
-            logger.info(f"Consumed message: {record['title']} - {record['url']}")
-            if len(news_records) >= 10:
-                break
-
-            time.sleep(1)
-        consumer.close()
-        logger.info(f"Data consumed from Kafka. Total records: {len(news_records)}.")
-
-    await asyncio.to_thread(consume_messages)
-    return news_records
+# async def stream_to_kafka(news_data):
+#     """Stream the news data to Kafka asynchronously."""
+#     producer = KafkaProducer(bootstrap_servers=KAFKA_BROKER,
+#                              value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+#
+#     for article in news_data:
+#         title = article['title']
+#         url = article['url']
+#         sentiment = await analyze_sentiment(title)
+#         signal = generate_signal(sentiment)
+#
+#         message = {'title': title, 'url': url, 'sentiment': sentiment, 'signal': signal}
+#         producer.send(KAFKA_TOPIC, value=message)
+#
+#     producer.close()
+#     logger.info("News data streamed to Kafka.")
+#
+#
+# async def consume_from_kafka():
+#     """Consume news data from Kafka asynchronously."""
+#     consumer = KafkaConsumer(
+#         KAFKA_TOPIC,
+#         bootstrap_servers=KAFKA_BROKER,
+#         auto_offset_reset='earliest',
+#         enable_auto_commit=True,
+#         session_timeout_ms=160000,
+#         request_timeout_ms=170000
+#     )
+#     news_records = []
+#     logger.info(f"Consumer started, waiting for messages on topic: {KAFKA_TOPIC}...")
+#
+#     def consume_messages():
+#         for message in consumer:
+#             record = json.loads(message.value.decode('utf-8'))
+#             news_records.append(record)
+#
+#             logger.info(f"Consumed message: {record['title']} - {record['url']}")
+#             if len(news_records) >= 10:
+#                 break
+#
+#             time.sleep(1)
+#         consumer.close()
+#         logger.info(f"Data consumed from Kafka. Total records: {len(news_records)}.")
+#
+#     await asyncio.to_thread(consume_messages)
+#     return news_records
 
 async def save_to_csv(news_records):
     """Save the consumed news data to a CSV file asynchronously."""
